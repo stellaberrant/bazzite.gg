@@ -557,12 +557,6 @@ code {
   color: #fff;
 }
 
-.button-torrent,
-.button-liveiso {
-  background-image: none;
-  background: #5643b4 !important;
-}
-
 .button-torrent .button_icon {
   margin-top: -3px;
   margin-bottom: -3px;
@@ -1286,7 +1280,6 @@ d-topics-list > iframe {
 
 .sha256,
 .sha256-liveiso {
-  position: absolute;
   margin-top: 13px;
   margin-left: 15px;
 }
@@ -1919,3 +1912,10 @@ d-topics-list > iframe {
     margin-top: 100px;
   }
 }
+.button-download {
+    margin-left: 20px;
+    padding: 5px!important;
+    font-size: 10px!important;
+    background: none!important;
+}
+
