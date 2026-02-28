@@ -362,48 +362,33 @@ jQuery(document).ready(function() {
           fillWidget(widgets[i]);
       }
 
+      var pullCount = "40M+"
+
+      document.getElementById('contributor-container').innerHTML += '<div class="github-profile-badge always-expanded animate" data-anim-type="fadeInUp" style="animation-delay:' + animDelay + 'ms;"><a href="https://github.com/orgs/ublue-os/packages?repo_name=bazzite" target="_blank" class="github-profile-badge-wrapper"><div class="github-profile-badge-img-wrapper"><i class="fa-solid fa-layer-group"></i></div><div class="github-profile-badge-name-wrapper"><p class="github-profile-badge-name">' + pullCount + ' Image Pulls</p></div></a></div>';
+      animDelay += 40;
+
       jQuery.ajax({
-        url : "https://bazzite.gg/ghp-stats.json",
+        url : "https://bazzite.gg/bazzite-repo-data.json",
         dataType: "json",
         success : function (data) {
-          var totalPulls = 0;
-          var lastData = data[Object.keys(data)[Object.keys(data).length - 1]];
-          
-          $.each(lastData, function(key, value) {
-            if (key.indexOf("bazzite") !== -1) {
-              totalPulls += value;
-            }
-          });
+          var stargazersCount = Intl.NumberFormat('en-US', {
+            notation: "compact",
+            maximumFractionDigits: 1
+          }).format(data['stargazers_count']);
 
-          var pullCount = "40M+"
-
-          document.getElementById('contributor-container').innerHTML += '<div class="github-profile-badge always-expanded animate" data-anim-type="fadeInUp" style="animation-delay:' + animDelay + 'ms;"><a href="https://github.com/orgs/ublue-os/packages?repo_name=bazzite" target="_blank" class="github-profile-badge-wrapper"><div class="github-profile-badge-img-wrapper"><i class="fa-solid fa-layer-group"></i></div><div class="github-profile-badge-name-wrapper"><p class="github-profile-badge-name">' + pullCount + ' Image Pulls</p></div></a></div>';
+          document.getElementById('contributor-container').innerHTML += '<div class="github-profile-badge always-expanded animate" data-anim-type="fadeInUp" style="animation-delay:' + animDelay + 'ms;"><a href="https://github.com/ublue-os/bazzite/stargazers" target="_blank" class="github-profile-badge-wrapper"><div class="github-profile-badge-img-wrapper"><i class="fa-solid fa-star"></i></div><div class="github-profile-badge-name-wrapper"><p class="github-profile-badge-name">' + stargazersCount + ' Stargazers</p></div></a></div>';
           animDelay += 40;
 
           jQuery.ajax({
-            url : "https://bazzite.gg/bazzite-repo-data.json",
-            dataType: "json",
+            url : "https://bazzite.gg/contributors.txt",
+            dataType: "text",
             success : function (data) {
-              var stargazersCount = Intl.NumberFormat('en-US', {
+              var contributorsCount = Intl.NumberFormat('en-US', {
                 notation: "compact",
                 maximumFractionDigits: 1
-              }).format(data['stargazers_count']);
+              }).format(Number(data.trim()) - 22);
 
-              document.getElementById('contributor-container').innerHTML += '<div class="github-profile-badge always-expanded animate" data-anim-type="fadeInUp" style="animation-delay:' + animDelay + 'ms;"><a href="https://github.com/ublue-os/bazzite/stargazers" target="_blank" class="github-profile-badge-wrapper"><div class="github-profile-badge-img-wrapper"><i class="fa-solid fa-star"></i></div><div class="github-profile-badge-name-wrapper"><p class="github-profile-badge-name">' + stargazersCount + ' Stargazers</p></div></a></div>';
-              animDelay += 40;
-
-              jQuery.ajax({
-                url : "https://bazzite.gg/contributors.txt",
-                dataType: "text",
-                success : function (data) {
-                  var contributorsCount = Intl.NumberFormat('en-US', {
-                    notation: "compact",
-                    maximumFractionDigits: 1
-                  }).format(Number(data.trim()) - 22);
-
-                  document.getElementById('contributor-container').innerHTML += '<div class="github-profile-badge always-expanded animate" data-anim-type="fadeInUp" style="animation-delay:' + animDelay + 'ms;"><a href="https://github.com/ublue-os/bazzite/graphs/contributors" target="_blank" class="github-profile-badge-wrapper"><div class="github-profile-badge-img-wrapper"><i class="fa-solid fa-people-group"></i></div><div class="github-profile-badge-name-wrapper"><p class="github-profile-badge-name">And ' + contributorsCount + ' other contributors</p></div></a></div>';
-                }
-              });
+              document.getElementById('contributor-container').innerHTML += '<div class="github-profile-badge always-expanded animate" data-anim-type="fadeInUp" style="animation-delay:' + animDelay + 'ms;"><a href="https://github.com/ublue-os/bazzite/graphs/contributors" target="_blank" class="github-profile-badge-wrapper"><div class="github-profile-badge-img-wrapper"><i class="fa-solid fa-people-group"></i></div><div class="github-profile-badge-name-wrapper"><p class="github-profile-badge-name">And ' + contributorsCount + ' other contributors</p></div></a></div>';
             }
           });
         }
